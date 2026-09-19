@@ -1,0 +1,56 @@
+:root {
+  color-scheme: light dark;
+
+  /* Light (default) */
+  --paper: #f6f3ea;
+  --paper-alt: #efe9d8;
+  --ink: #141310;
+  --ink-soft: #55503f;
+  --ink-faint: #6b6552;
+  --accent: #ff4a1f;
+  --accent-text: #c7370f;
+  --accent-ink: #14100d;
+  --line: rgba(20, 19, 16, 0.14);
+  --line-strong: rgba(20, 19, 16, 0.28);
+
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.25rem;
+  --space-7: 3.5rem;
+  --space-8: 5.5rem;
+  --space-9: 8.5rem;
+
+  --rail-width: 4.5rem;
+  --content-max: 74rem;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --space-8: 3.5rem;
+    --space-9: 4.75rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121110;
+    --paper-alt: #1a1815;
+    --ink: #f2ede0;
+    --ink-soft: #b7b09b;
+    --ink-faint: #8f8973;
+    --accent: #ff6a3d;
+    --accent-text: #ff6a3d;
+    --accent-ink: #14100d;
+    --line: rgba(242, 237, 224, 0.14);
+    --line-strong: rgba(242, 237, 224, 0.26);
+  }
+}
