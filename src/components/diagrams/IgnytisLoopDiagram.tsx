@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 const nodeVariants = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -56,7 +56,8 @@ const hDotPath = [
 ];
 const hLoopPath = `M ${hCenter(hNodes[3].x)} ${H_Y + H_NODE_H} V ${H_LOOP_Y} H ${hCenter(hNodes[0].x)} V ${H_Y + H_NODE_H}`;
 
-function HorizontalLoop() {
+function HorizontalLoop({ inView }: { inView: boolean }) {
+  const state = inView ? "visible" : "hidden";
   return (
     <svg
       viewBox="0 0 460 190"
@@ -78,8 +79,7 @@ function HorizontalLoop() {
           markerEnd="url(#ignytis-arrow)"
           custom={i}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={state}
           variants={lineVariants}
         />
       ))}
@@ -93,8 +93,7 @@ function HorizontalLoop() {
         markerEnd="url(#ignytis-arrow-accent)"
         custom={hNodes.length}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate={state}
         variants={lineVariants}
       />
       <text
@@ -109,7 +108,7 @@ function HorizontalLoop() {
       </text>
 
       {hNodes.map((n, i) => (
-        <motion.g key={n.key} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={nodeVariants}>
+        <motion.g key={n.key} custom={i} initial="hidden" animate={state} variants={nodeVariants}>
           <rect
             x={n.x}
             y={H_Y}
@@ -161,7 +160,8 @@ const vDotPath = [
 ];
 const V_VIEW_H = vNodes[3].y + V_NODE_H + 30;
 
-function VerticalLoop() {
+function VerticalLoop({ inView }: { inView: boolean }) {
+  const state = inView ? "visible" : "hidden";
   return (
     <svg
       viewBox={`0 0 260 ${V_VIEW_H}`}
@@ -183,8 +183,7 @@ function VerticalLoop() {
           markerEnd="url(#ignytis-arrow)"
           custom={i}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={state}
           variants={lineVariants}
         />
       ))}
@@ -198,8 +197,7 @@ function VerticalLoop() {
         markerEnd="url(#ignytis-arrow-accent)"
         custom={vNodes.length}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate={state}
         variants={lineVariants}
       />
       <text
@@ -215,7 +213,7 @@ function VerticalLoop() {
       </text>
 
       {vNodes.map((n, i) => (
-        <motion.g key={n.key} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={nodeVariants}>
+        <motion.g key={n.key} custom={i} initial="hidden" animate={state} variants={nodeVariants}>
           <rect
             x={V_X}
             y={n.y}
@@ -273,5 +271,19 @@ export function IgnytisLoopDiagram() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  return isNarrow ? <VerticalLoop /> : <HorizontalLoop />;
+  // Observe a plain HTML wrapper rather than gating each SVG child shape with
+  // its own `whileInView` (WebKit's IntersectionObserver is unreliable when
+  // the target is an SVG shape/group element itself, which left the diagram
+  // permanently stuck at opacity:0 on iPhone Safari/Chrome — both WebKit —
+  // while working fine on desktop Chromium). A plain <div> is the same kind
+  // of observation target already used reliably elsewhere in this codebase
+  // (see WebBugPilotCase.tsx's useInView on a motion.div).
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapperRef, { once: true });
+
+  return (
+    <div ref={wrapperRef}>
+      {isNarrow ? <VerticalLoop inView={inView} /> : <HorizontalLoop inView={inView} />}
+    </div>
+  );
 }
