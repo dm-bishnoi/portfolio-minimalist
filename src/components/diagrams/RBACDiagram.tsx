@@ -28,10 +28,20 @@ export function RBACDiagram() {
   return (
     <div>
       <div className={styles.toggle} role="group" aria-label="Preview access as role">
-        <button type="button" className={role === "Admin" ? styles.active : ""} onClick={() => setRole("Admin")}>
+        <button
+          type="button"
+          aria-pressed={role === "Admin"}
+          className={role === "Admin" ? styles.active : ""}
+          onClick={() => setRole("Admin")}
+        >
           Admin
         </button>
-        <button type="button" className={role === "Viewer" ? styles.active : ""} onClick={() => setRole("Viewer")}>
+        <button
+          type="button"
+          aria-pressed={role === "Viewer"}
+          className={role === "Viewer" ? styles.active : ""}
+          onClick={() => setRole("Viewer")}
+        >
           Viewer
         </button>
       </div>

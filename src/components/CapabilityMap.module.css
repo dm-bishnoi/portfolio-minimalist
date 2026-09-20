@@ -1,0 +1,174 @@
+.map {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: var(--space-5);
+  align-items: stretch;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.capList {
+  display: flex;
+  flex-direction: column;
+}
+
+.capItem {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-4) var(--space-3);
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  transition: background 0.25s var(--ease-out);
+}
+
+.mobileSources {
+  display: none;
+}
+
+.capList li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.capItem:hover,
+.capActive {
+  background: var(--paper-alt);
+}
+
+.capIndex {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+
+.capActive .capIndex {
+  color: var(--accent-text);
+}
+
+.capTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.capEvidence {
+  flex-basis: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  transition: max-height 0.35s var(--ease-out), opacity 0.3s var(--ease-out), margin 0.35s var(--ease-out);
+}
+
+.capActive .capEvidence {
+  max-height: 6rem;
+  opacity: 1;
+  margin-top: var(--space-1);
+}
+
+.nodeList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  padding-block: var(--space-2);
+}
+
+.node {
+  position: relative;
+  z-index: 2;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  transition: border-color 0.25s var(--ease-out), background 0.25s var(--ease-out);
+}
+
+.node a {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+
+.nodeActive {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.nodeActive a {
+  color: var(--accent-text);
+}
+
+@media (max-width: 640px) {
+  .map {
+    display: block;
+  }
+
+  .svg,
+  .nodeList {
+    display: none;
+  }
+
+  .capItem {
+    padding-block: var(--space-5);
+    min-height: 44px;
+    align-items: flex-start;
+  }
+
+  .capIndex {
+    font-size: 0.75rem;
+  }
+
+  .capTitle {
+    font-size: 1.1rem;
+    flex-basis: 100%;
+  }
+
+  .mobileSources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    flex-basis: 100%;
+    margin-top: var(--space-1);
+  }
+
+  .mobileSources li {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    padding: 0.3em 0.7em;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-faint);
+  }
+
+  .capActive .mobileSources li {
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }
+
+  .capEvidence {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .capActive .capEvidence {
+    max-height: 10rem;
+  }
+}

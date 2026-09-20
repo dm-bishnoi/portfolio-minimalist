@@ -93,7 +93,8 @@
 .roleSwitch button {
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  padding: 0.3em 0.65em;
+  padding: 0.6em 0.7em;
+  min-height: 28px;
   color: var(--ink-faint);
 }
 
@@ -139,6 +140,7 @@
 }
 
 .uiButton {
+  display: block;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   padding: 0.6em;
@@ -149,9 +151,8 @@
   transition: opacity 0.2s var(--ease-out);
 }
 
-.uiButton:disabled {
+.uiButtonDisabled {
   opacity: 0.35;
-  cursor: not-allowed;
 }
 
 .codeLayer {

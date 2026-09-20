@@ -6,9 +6,19 @@ export function About() {
   return (
     <section id="about" aria-label="About">
       <div className={`container ${styles.grid}`}>
-        <Reveal>
-          <p className="eyebrow">{about.eyebrow}</p>
-        </Reveal>
+        <div className={styles.left}>
+          <h2 className="sr-only">{about.eyebrow}</h2>
+          <Reveal>
+            <p className="eyebrow" aria-hidden="true">
+              {about.eyebrow}
+            </p>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <span className={styles.mark} aria-hidden="true">
+              05
+            </span>
+          </Reveal>
+        </div>
 
         <div className={styles.copy}>
           {about.body.map((line, i) => (

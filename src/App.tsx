@@ -1,3 +1,4 @@
+import { MotionConfig } from "framer-motion";
 import { Nav } from "./components/Nav";
 import { Cursor } from "./components/Cursor";
 import { ScrollProgress } from "./components/ScrollProgress";
@@ -12,7 +13,7 @@ import { Contact } from "./sections/Contact";
 
 function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -29,7 +30,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </MotionConfig>
   );
 }
 

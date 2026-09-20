@@ -9,7 +9,8 @@
 .toggle button {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  padding: 0.4em 0.9em;
+  padding: 0.6em 1em;
+  min-height: 32px;
   color: var(--ink-faint);
   transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }

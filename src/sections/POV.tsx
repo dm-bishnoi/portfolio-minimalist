@@ -11,7 +11,7 @@ export function POV() {
             <p className="eyebrow">{pov.eyebrow}</p>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className={styles.statement}>{pov.statement}</p>
+            <h2 className={styles.statement}>{pov.statement}</h2>
           </Reveal>
         </div>
 

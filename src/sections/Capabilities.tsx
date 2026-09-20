@@ -1,6 +1,7 @@
 import { capabilities } from "../data/content";
-import { Reveal, RevealGroup, RevealItem } from "../components/Reveal";
+import { Reveal } from "../components/Reveal";
 import { Parallax } from "../components/Parallax";
+import { CapabilityMap } from "../components/CapabilityMap";
 import styles from "./Capabilities.module.css";
 
 export function Capabilities() {
@@ -15,24 +16,13 @@ export function Capabilities() {
             <h2 className={styles.heading}>What that looks like in practice.</h2>
           </Reveal>
         </Parallax>
+        <Reveal delay={0.1}>
+          <p className={styles.hint}>Hover or tap a capability to see the project it comes from.</p>
+        </Reveal>
 
-        <RevealGroup className={styles.grid} stagger={0.07}>
-          {capabilities.items.map((item, i) => (
-            <RevealItem as="div" className={styles.card} key={item.title}>
-              <span className={styles.index}>{String(i + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p>{item.evidence}</p>
-              <div className={styles.sources}>
-                <span className={styles.sourcesLabel}>Evidence</span>
-                {item.sources.map((s) => (
-                  <a key={s.label} href={s.href} className={styles.sourceChip}>
-                    {s.label} ↗
-                  </a>
-                ))}
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        <Reveal delay={0.14} className={styles.mapWrap}>
+          <CapabilityMap />
+        </Reveal>
       </div>
     </section>
   );

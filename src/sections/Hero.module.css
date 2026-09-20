@@ -6,6 +6,12 @@
   border-top: none;
 }
 
+@media (max-width: 899px) {
+  .hero {
+    padding-bottom: 0;
+  }
+}
+
 .inner {
   padding-block: var(--space-7);
   display: flex;
@@ -99,6 +105,14 @@
   font-size: 0.85rem;
   color: var(--ink-soft);
   text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .secondaryLink {
+    display: inline-block;
+    padding-block: 0.5em;
+    margin-block: -0.5em;
+  }
 }
 
 .scrollCue {

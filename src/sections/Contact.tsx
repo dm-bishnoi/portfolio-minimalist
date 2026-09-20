@@ -33,9 +33,11 @@ export function Contact() {
             </a>
           </div>
         </Reveal>
-
-        <p className={styles.name}>{profile.name}</p>
       </div>
+
+      <Reveal delay={0.2} className={styles.signatureWrap}>
+        <p className={styles.signature}>{profile.name}</p>
+      </Reveal>
     </section>
   );
 }

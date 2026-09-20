@@ -23,11 +23,22 @@ export function CodeReveal() {
   const percent = useMotionValue(0);
   const springPercent = useSpring(percent, { stiffness: 220, damping: 30, mass: 0.6 });
   const clipPath = useTransform(springPercent, (v) => `inset(0 ${100 - v}% 0 0)`);
+  const left = useTransform(springPercent, (v) => `${v}%`);
+  // Only used for the ARIA attributes below — the visible handle position is
+  // driven by the `left` MotionValue above, committed directly to the DOM by
+  // Framer without going through React, so dragging doesn't re-render on every frame.
   const [live, setLive] = useState(0);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const unsub = springPercent.on("change", setLive);
+    let lastRounded = -1;
+    const unsub = springPercent.on("change", (v) => {
+      const rounded = Math.round(v);
+      if (rounded !== lastRounded) {
+        lastRounded = rounded;
+        setLive(rounded);
+      }
+    });
     if (reduced) {
       percent.set(REST_PERCENT);
     } else {
@@ -82,17 +93,20 @@ export function CodeReveal() {
       >
         <div className={styles.uiLayer}>
           <div className={styles.uiCard}>
-            <div className={styles.uiCardHead}>
+            <div className={styles.uiCardHead} aria-hidden="true">
               <span className={styles.uiDot} />
               <span className={styles.uiDot} />
               <span className={styles.uiDot} />
             </div>
             <div className={styles.uiBody}>
               <div className={styles.uiRow}>
-                <span className={styles.uiBadge}>{role}</span>
+                <span className={styles.uiBadge} aria-hidden="true">
+                  {role}
+                </span>
                 <div className={styles.roleSwitch} role="group" aria-label="Preview role">
                   <button
                     type="button"
+                    aria-pressed={role === "Admin"}
                     className={role === "Admin" ? styles.roleActive : ""}
                     onClick={() => setRole("Admin")}
                   >
@@ -100,6 +114,7 @@ export function CodeReveal() {
                   </button>
                   <button
                     type="button"
+                    aria-pressed={role === "Viewer"}
                     className={role === "Viewer" ? styles.roleActive : ""}
                     onClick={() => setRole("Viewer")}
                   >
@@ -107,15 +122,21 @@ export function CodeReveal() {
                   </button>
                 </div>
               </div>
-              <div className={styles.uiToggleRow}>
+              <div className={styles.uiToggleRow} aria-hidden="true">
                 <span>Can edit permissions</span>
                 <span className={`${styles.toggle} ${role === "Admin" ? styles.toggleOn : ""}`}>
                   <span className={styles.toggleKnob} />
                 </span>
               </div>
-              <button className={styles.uiButton} disabled={role !== "Admin"} type="button">
+              <span
+                className={`${styles.uiButton} ${role !== "Admin" ? styles.uiButtonDisabled : ""}`}
+                aria-hidden="true"
+              >
                 Save changes
-              </button>
+              </span>
+              <p className="sr-only" aria-live="polite">
+                Previewing the {role} role: permissions are {role === "Admin" ? "editable and changes can be saved" : "locked and changes cannot be saved"}.
+              </p>
             </div>
           </div>
         </div>
@@ -135,13 +156,14 @@ export function CodeReveal() {
 
         <motion.div
           className={styles.handle}
-          style={{ left: `${live}%` }}
+          style={{ left }}
           role="slider"
           tabIndex={0}
           aria-label="Reveal code behind this interface"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(live)}
+          aria-valuenow={live}
+          aria-valuetext={`${live}% code, ${100 - live}% interface`}
           onKeyDown={onKeyDown}
         >
           <span className={styles.handleGrip}>{"</>"}</span>
