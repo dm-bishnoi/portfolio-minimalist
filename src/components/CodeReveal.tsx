@@ -16,6 +16,14 @@ const code = [
 
 const REST_PERCENT = 38;
 
+// Pointer events on the track bubble up from every element rendered inside
+// the simulated interface. Anything a real user could operate there (the
+// role-switch buttons today, and whatever future controls join them) must
+// keep its own click/keyboard behavior instead of being swallowed as a
+// compare-drag gesture.
+const INTERACTIVE_SELECTOR =
+  'button, input, textarea, select, a[href], [role="button"], [contenteditable="true"], [contenteditable=""]';
+
 export function CodeReveal() {
   const trackRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -61,6 +69,9 @@ export function CodeReveal() {
   };
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    // Let the gesture start the drag only when it targets the comparison
+    // surface itself — not a control rendered inside the simulated interface.
+    if ((e.target as HTMLElement).closest(INTERACTIVE_SELECTOR)) return;
     dragging.current = true;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     setFromClientX(e.clientX);

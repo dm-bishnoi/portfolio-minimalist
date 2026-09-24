@@ -1,4 +1,5 @@
 import { MotionConfig } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 import { Nav } from "./components/Nav";
 import { Cursor } from "./components/Cursor";
 import { ScrollProgress } from "./components/ScrollProgress";
@@ -32,6 +33,7 @@ function App() {
       </main>
       <Footer />
       <BackToTop />
+      <Analytics />
     </MotionConfig>
   );
 }
