@@ -85,33 +85,29 @@ export function CapabilityMap() {
             ref={(el) => {
               capRefs.current[i] = el;
             }}
-            className={`${styles.capItem} ${active === i ? styles.capActive : ""}`}
-            tabIndex={0}
-            role="button"
-            aria-pressed={pinned === i}
-            aria-label={`${item.title}. ${item.evidence}`}
-            onMouseEnter={() => setHovered(i)}
-            onMouseLeave={() => setHovered(null)}
-            onFocus={() => setHovered(i)}
-            onBlur={() => setHovered(null)}
-            onClick={() => setPinned((p) => (p === i ? null : i))}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setPinned((p) => (p === i ? null : i));
-              }
-            }}
           >
-            <span className={styles.capIndex}>{String(i + 1).padStart(2, "0")}</span>
-            <span className={styles.capTitle}>{item.title}</span>
-            <ul className={styles.mobileSources} aria-hidden="true">
-              {(item.sources as EvidenceNodeId[]).map((id) => {
-                const node = evidenceNodes.find((n) => n.id === id);
-                if (!node) return null;
-                return <li key={id}>{node.label}</li>;
-              })}
-            </ul>
-            <span className={styles.capEvidence}>{item.evidence}</span>
+            <button
+              type="button"
+              className={`${styles.capItem} ${active === i ? styles.capActive : ""}`}
+              aria-pressed={pinned === i}
+              aria-label={`${item.title}. ${item.evidence}`}
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(i)}
+              onBlur={() => setHovered(null)}
+              onClick={() => setPinned((p) => (p === i ? null : i))}
+            >
+              <span className={styles.capIndex}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={styles.capTitle}>{item.title}</span>
+              <span className={styles.mobileSources} aria-hidden="true">
+                {(item.sources as EvidenceNodeId[]).map((id) => {
+                  const node = evidenceNodes.find((n) => n.id === id);
+                  if (!node) return null;
+                  return <span key={id}>{node.label}</span>;
+                })}
+              </span>
+              <span className={styles.capEvidence}>{item.evidence}</span>
+            </button>
           </li>
         ))}
       </ul>

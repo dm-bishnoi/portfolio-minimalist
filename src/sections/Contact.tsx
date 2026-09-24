@@ -27,9 +27,11 @@ export function Contact() {
           <div className={styles.links}>
             <a href={contact.github} target="_blank" rel="noopener noreferrer" className="link-underline">
               GitHub
+              <span className="sr-only"> (opens in new tab)</span>
             </a>
             <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="link-underline">
               LinkedIn
+              <span className="sr-only"> (opens in new tab)</span>
             </a>
           </div>
         </Reveal>

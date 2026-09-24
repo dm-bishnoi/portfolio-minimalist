@@ -30,6 +30,8 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-3);
+  width: 100%;
+  text-align: left;
   transition: background 0.25s var(--ease-out);
 }
 
@@ -148,7 +150,7 @@
     margin-top: var(--space-1);
   }
 
-  .mobileSources li {
+  .mobileSources > span {
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.03em;
@@ -158,7 +160,7 @@
     color: var(--ink-faint);
   }
 
-  .capActive .mobileSources li {
+  .capActive .mobileSources > span {
     border-color: var(--accent);
     color: var(--accent-text);
   }

@@ -44,6 +44,7 @@ export function ProjectFacts({
           className={`link-underline ${styles.repoLink}`}
         >
           View repository ↗
+          <span className="sr-only"> (opens in new tab)</span>
         </a>
       )}
     </Reveal>

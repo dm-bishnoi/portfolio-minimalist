@@ -83,7 +83,14 @@
   padding: 0.35em 0.75em;
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent-text);
+  /* Darkened slightly in light mode to reach 4.5:1 on the tinted pill. */
+  color: color-mix(in srgb, var(--accent-text) 85%, var(--ink));
+}
+
+@media (prefers-color-scheme: dark) {
+  .quickFacts li {
+    color: var(--accent-text);
+  }
 }
 
 .facts {

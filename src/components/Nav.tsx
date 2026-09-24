@@ -7,6 +7,9 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  // Closing the overlay normally hands focus back to the toggle; choosing a
+  // section instead moves focus to that section, so the restore is skipped.
+  const restoreFocusRef = useRef(true);
 
   useEffect(() => {
     const sections = nav
@@ -28,7 +31,15 @@ export function Nav() {
   }, []);
 
   const go = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const target = document.getElementById(id);
+    if (!target) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+    // Move keyboard focus with the scroll so the next Tab continues from the
+    // chosen section instead of jumping back to the top of the page.
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    restoreFocusRef.current = false;
     setOpen(false);
   };
 
@@ -36,16 +47,20 @@ export function Nav() {
   useEffect(() => {
     if (!open) return;
 
+    restoreFocusRef.current = true;
     const overlay = overlayRef.current;
-    const focusable = overlay?.querySelectorAll<HTMLElement>("button, a[href]");
-    focusable?.[0]?.focus();
+    const toggle = toggleRef.current;
+    const items = Array.from(overlay?.querySelectorAll<HTMLElement>("button, a[href]") ?? []);
+    // The Close toggle sits outside the overlay, so it joins the trap explicitly.
+    const focusable = toggle ? [toggle, ...items] : items;
+    items[0]?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
         return;
       }
-      if (e.key !== "Tab" || !focusable || focusable.length === 0) return;
+      if (e.key !== "Tab" || focusable.length === 0) return;
 
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -59,17 +74,16 @@ export function Nav() {
     };
 
     window.addEventListener("keydown", onKey);
-    const toggle = toggleRef.current;
     return () => {
       window.removeEventListener("keydown", onKey);
-      toggle?.focus();
+      if (restoreFocusRef.current) toggle?.focus();
     };
   }, [open]);
 
   return (
     <>
       <nav className={styles.rail} aria-label="Section navigation">
-        <a href="#hero" className={styles.mark} aria-label={`${profile.name} — home`}>
+        <a href="#hero" className={styles.mark} aria-label={`DB — ${profile.name}, home`}>
           DB
         </a>
         <ul>
@@ -79,7 +93,7 @@ export function Nav() {
                 type="button"
                 className={item.id === active ? styles.active : ""}
                 onClick={() => go(item.id)}
-                aria-current={item.id === active ? "true" : undefined}
+                aria-current={item.id === active ? "location" : undefined}
               >
                 <span className={styles.num}>{item.num}</span>
                 <span className={styles.label}>{item.label}</span>
@@ -90,7 +104,7 @@ export function Nav() {
       </nav>
 
       <div className={styles.mobileBar}>
-        <a href="#hero" className={styles.mobileMark}>
+        <a href="#hero" className={styles.mobileMark} aria-label={`DB — ${profile.name}, home`}>
           DB
         </a>
         <button

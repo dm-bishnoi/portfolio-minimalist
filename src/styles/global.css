@@ -89,9 +89,11 @@ svg {
   outline-offset: 3px;
 }
 
-/* <main> takes programmatic focus (skip link, back-to-top) only as a
-   starting point for keyboard navigation — no need to outline the page. */
-main:focus {
+/* <main> and nav-targeted sections take programmatic focus (skip link,
+   back-to-top, section nav) only as a starting point for keyboard
+   navigation — no need to outline the page. */
+main:focus,
+[tabindex="-1"]:focus {
   outline: none;
 }
 

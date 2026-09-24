@@ -87,8 +87,14 @@ export function CodeReveal() {
   };
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "ArrowLeft") percent.set(Math.max(0, percent.get() - 6));
-    if (e.key === "ArrowRight") percent.set(Math.min(100, percent.get() + 6));
+    const step = { ArrowLeft: -6, ArrowDown: -6, ArrowRight: 6, ArrowUp: 6, PageDown: -20, PageUp: 20 }[e.key];
+    let next: number;
+    if (step !== undefined) next = percent.get() + step;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = 100;
+    else return;
+    e.preventDefault();
+    percent.set(Math.min(100, Math.max(0, next)));
   };
 
   return (

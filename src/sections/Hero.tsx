@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { profile, contact } from "../data/content";
 import { Magnetic } from "../components/Magnetic";
@@ -26,20 +27,23 @@ export function Hero() {
 
           <h1 className={styles.headline}>
             {headline.map((word, i) => (
-              <span className={styles.wordMask} key={word}>
-                <motion.span
-                  className={styles.word}
-                  initial={{ y: "110%" }}
-                  animate={{ y: "0%" }}
-                  transition={{
-                    duration: 0.9,
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: 0.25 + i * 0.07,
-                  }}
-                >
-                  {word}
-                </motion.span>
-              </span>
+              <Fragment key={word}>
+                {i > 0 && " "}
+                <span className={styles.wordMask}>
+                  <motion.span
+                    className={styles.word}
+                    initial={{ y: "110%" }}
+                    animate={{ y: "0%" }}
+                    transition={{
+                      duration: 0.9,
+                      ease: [0.16, 1, 0.3, 1],
+                      delay: 0.25 + i * 0.07,
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              </Fragment>
             ))}
           </h1>
 

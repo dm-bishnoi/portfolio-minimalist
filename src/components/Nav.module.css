@@ -26,7 +26,9 @@
     text-decoration: none;
     color: var(--ink);
     writing-mode: horizontal-tb;
-    margin-bottom: var(--space-7);
+    /* Larger hit area; the negative margin cancels it out of the layout. */
+    padding: 12px 13px;
+    margin: -12px -13px calc(var(--space-7) - 12px);
   }
 
   .rail ul {
@@ -97,6 +99,9 @@
   text-decoration: none;
   color: var(--ink);
   font-size: 0.9rem;
+  /* Larger hit area; the negative margin cancels it out of the layout. */
+  padding: 11px 14px;
+  margin: -11px -14px;
 }
 
 .mobileToggle {

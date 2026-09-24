@@ -168,7 +168,7 @@
 .codeHead {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: #7a755f;
+  color: #8f8973;
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;

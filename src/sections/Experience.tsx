@@ -33,7 +33,7 @@ export function Experience() {
                 {i < experience.areas.length - 1 && <span className={styles.nodeLine} />}
               </div>
               <div className={styles.nodeBody}>
-                <span className={styles.nodeIndex}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={styles.nodeIndex} aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                 <h4>{area.label}</h4>
                 <ul>
                   {area.points.map((p) => (
