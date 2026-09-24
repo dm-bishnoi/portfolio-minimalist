@@ -176,7 +176,7 @@ export const capabilities = {
     },
     {
       title: "Frontend Engineering",
-      evidence: "Five years of production Angular, plus a React/TypeScript frontend built for WebBugPilot — component architecture, state, routing, tests.",
+      evidence: "Six years of production Angular, plus a React/TypeScript frontend built for WebBugPilot — component architecture, state, routing, tests.",
       sources: ["flexschema", "webbugpilot"] as EvidenceNodeId[],
     },
     {
@@ -206,7 +206,7 @@ export const about = {
   eyebrow: "About",
   body: [
     "I work across the line that usually separates design from engineering — deciding how something should look and behave, and then building it myself.",
-    "That comes from five years of shipping Angular applications inside a real production environment, and from building my own systems — like Ignytis's sandboxed code-execution service and WebBugPilot's local-first developer tooling — the rest of the time.",
+    "That comes from six years of shipping Angular applications inside a real production environment, and from building my own systems — like Ignytis's sandboxed code-execution service and WebBugPilot's local-first developer tooling — the rest of the time.",
     "I care more about a product being coherent end to end than about any single screen looking impressive in isolation.",
   ],
 };
