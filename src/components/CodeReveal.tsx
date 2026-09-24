@@ -169,7 +169,6 @@ export function CodeReveal() {
           <span className={styles.handleGrip}>{"</>"}</span>
         </motion.div>
       </div>
-      <p className={styles.caption}>Drag to see the code behind the interface</p>
     </div>
   );
 }

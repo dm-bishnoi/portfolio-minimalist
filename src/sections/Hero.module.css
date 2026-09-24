@@ -23,11 +23,24 @@
 }
 
 .eyebrow {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 440px) {
+  .eyebrow {
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (min-width: 900px) {
+  .eyebrow {
+    margin-bottom: var(--space-6);
+  }
 }
 
 .headline {
-  font-size: clamp(2.3rem, 5.4vw, 4.4rem);
+  font-size: clamp(2.6rem, 5.4vw + 0.6rem, 4.4rem);
   font-weight: 500;
   display: flex;
   flex-wrap: wrap;
@@ -38,7 +51,22 @@
 .visual {
   width: 100%;
   max-width: 46rem;
-  margin: var(--space-8) auto 0;
+  margin: var(--space-7) auto 0;
+}
+
+@media (min-width: 900px) {
+  .visual {
+    margin-top: var(--space-8);
+  }
+}
+
+.visualHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .visualLabel {
@@ -46,14 +74,21 @@
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--ink-faint);
-  text-align: center;
-  margin-bottom: var(--space-4);
+  text-wrap: balance;
 }
 
-@media (min-width: 900px) {
-  .visual {
-    margin-top: var(--space-9);
-  }
+.visualHint {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+
+.hintArrows {
+  letter-spacing: 0;
+  margin-right: 0.35em;
 }
 
 .wordMask {
@@ -66,18 +101,30 @@
 }
 
 .body {
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   max-width: 38ch;
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   color: var(--ink-soft);
 }
 
+.byline {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+
+.bylineName {
+  color: var(--ink);
+}
+
 .actions {
-  margin-top: var(--space-7);
+  margin-top: var(--space-6);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-4) var(--space-6);
 }
 
 .primaryBtn {
@@ -115,34 +162,35 @@
   }
 }
 
+/* Fixed to the same corner the back-to-top control later occupies; it fades
+   out with the first bit of scroll, so the two never appear together. Only
+   shown where that corner is clear of the code/interface exhibit. */
 .scrollCue {
-  position: absolute;
-  bottom: var(--space-6);
-  left: var(--space-5);
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .scrollCue {
+    display: block;
+    position: fixed;
+    right: var(--space-5);
+    bottom: var(--space-5);
+    pointer-events: none;
+  }
+}
+
+.scrollCueInner {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
 
-@media (min-width: 900px) {
-  .scrollCue {
-    left: calc(var(--rail-width) + var(--space-6));
-  }
-}
-
-.scrollLine {
-  width: 1px;
-  height: 2.5rem;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-}
-
-@media (max-width: 640px) {
-  .scrollCue {
-    display: none;
-  }
+.scrollArrow {
+  color: var(--accent-text);
+  letter-spacing: 0;
 }

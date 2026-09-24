@@ -1,0 +1,57 @@
+/* Dark editorial surface in both schemes: inverted ink in light mode,
+   the raised paper tone in dark mode. */
+.button {
+  --edge: max(var(--space-4), env(safe-area-inset-right));
+  position: fixed;
+  right: var(--edge);
+  bottom: calc(max(var(--space-4), env(safe-area-inset-bottom)) + var(--footer-lift, 0px));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 44px;
+  min-width: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+@media (min-width: 900px) {
+  .button {
+    --edge: var(--space-5);
+    height: 48px;
+    bottom: calc(var(--space-5) + var(--footer-lift, 0px));
+  }
+}
+
+.arrow {
+  font-size: 0.85rem;
+  letter-spacing: 0;
+  transition: color 0.3s var(--ease-out);
+}
+
+.button:hover,
+.button:focus-visible {
+  border-color: var(--accent);
+}
+
+.button:hover .arrow,
+.button:focus-visible .arrow {
+  color: var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background: var(--paper-alt);
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+}

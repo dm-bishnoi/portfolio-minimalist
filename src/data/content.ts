@@ -5,7 +5,9 @@
 
 export const profile = {
   name: "Dharmender Bishnoi",
-  role: "Senior Product Designer / Frontend Engineer",
+  role: "Angular Developer · Frontend Engineer",
+  experience: "6 years",
+  stack: ["Angular", "TypeScript", "RxJS"],
   positioning:
     "I bridge product design and frontend engineering — turning complex product ideas into polished, high-quality digital experiences.",
   location: "India",

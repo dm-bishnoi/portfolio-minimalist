@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { profile, contact } from "../data/content";
 import { Magnetic } from "../components/Magnetic";
 import { CodeReveal } from "../components/CodeReveal";
@@ -7,6 +7,10 @@ import styles from "./Hero.module.css";
 const headline = ["Product", "thinking,", "shipped", "in", "code."];
 
 export function Hero() {
+  // The scroll cue fades out as soon as the reader starts scrolling.
+  const { scrollY } = useScroll();
+  const cueOpacity = useTransform(scrollY, [0, 160], [1, 0]);
+
   return (
     <section id="hero" className={styles.hero} aria-label="Introduction">
       <div className={`container ${styles.inner}`}>
@@ -17,7 +21,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            {profile.name} — {profile.role}
+            {profile.role}
           </motion.p>
 
           <h1 className={styles.headline}>
@@ -48,6 +52,19 @@ export function Hero() {
             {profile.positioning}
           </motion.p>
 
+          <motion.p
+            className={styles.byline}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.82 }}
+          >
+            <span className={styles.bylineName}>{profile.name}</span>
+            <span aria-hidden="true"> · </span>
+            <span>
+              {profile.experience} with {profile.stack.join(", ")}
+            </span>
+          </motion.p>
+
           <motion.div
             className={styles.actions}
             initial={{ opacity: 0, y: 16 }}
@@ -71,20 +88,26 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
         >
-          <p className={styles.visualLabel}>The interface, and the code that produced it</p>
+          <div className={styles.visualHead}>
+            <p className={styles.visualLabel}>The interface, and the code that produced it</p>
+            <p className={styles.visualHint} aria-hidden="true">
+              <span className={styles.hintArrows}>←→</span> Drag to compare
+            </p>
+          </div>
           <CodeReveal />
         </motion.div>
       </div>
 
-      <motion.div
-        className={styles.scrollCue}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-        aria-hidden="true"
-      >
-        <span className={styles.scrollLine} />
-        <span>Scroll</span>
+      <motion.div className={styles.scrollCue} style={{ opacity: cueOpacity }} aria-hidden="true">
+        <motion.span
+          className={styles.scrollCueInner}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.6 }}
+        >
+          <span>Scroll to explore</span>
+          <span className={styles.scrollArrow}>↓</span>
+        </motion.span>
       </motion.div>
     </section>
   );

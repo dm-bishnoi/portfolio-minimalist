@@ -3,6 +3,7 @@ import { Nav } from "./components/Nav";
 import { Cursor } from "./components/Cursor";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { Footer } from "./components/Footer";
+import { BackToTop } from "./components/BackToTop";
 import { Hero } from "./sections/Hero";
 import { POV } from "./sections/POV";
 import { Work } from "./sections/Work";
@@ -20,7 +21,7 @@ function App() {
       <Cursor />
       <ScrollProgress />
       <Nav />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Hero />
         <POV />
         <Work />
@@ -30,6 +31,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </MotionConfig>
   );
 }

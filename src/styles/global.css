@@ -89,6 +89,12 @@ svg {
   outline-offset: 3px;
 }
 
+/* <main> takes programmatic focus (skip link, back-to-top) only as a
+   starting point for keyboard navigation — no need to outline the page. */
+main:focus {
+  outline: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
